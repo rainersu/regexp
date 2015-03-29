@@ -16,4 +16,4 @@ Copyright and license
 
 Copyright 2015 [Rainer Su](mailto:rainersu@foxmail.com) ([苏昱](http://cn.linkedin.com/in/rainersu)).
 
-Code and documentation is free to use under the [BSD license](https://github.com/rainersu/regexp/blob/master/LICENSE.md).
+Code and documentation is free to use under the [MIT license](https://github.com/rainersu/regexp/blob/master/LICENSE.md).

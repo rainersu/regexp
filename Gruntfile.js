@@ -14,6 +14,48 @@ var pkg = grunt.file.readJSON("package.json"),
 
 grunt.initConfig({
 	pkg         : pkg,
+	umd         : {
+		mod     : {
+			options : {
+				verbose      : true,
+				globalAlias  : 'sumiRegExp',
+				src          : MOD_DST_FILE,
+			    dest         : MOD_DST_FILE
+			}
+		}
+	},
+	uglify      : {
+		options : {
+			preserveComments : false,
+			banner           : COPYRIGHT
+		},
+		mod     : {
+			options : {
+				beautify     : true,
+				compress     : false,
+				mangle       : false
+			}, 
+			files   : [{ src : MOD_DST_FILE, dest: MOD_DST_FILE }]
+		},
+		min : {
+			options : {
+				sourceMap    : true,
+				sourceMapName: MOD_MIN_FILE + '.map',
+				verbose      : true,
+				compress     : true,
+				report       : 'min'
+			},
+			files   : [{ src : MOD_DST_FILE, dest: MOD_MIN_FILE }]
+		}
+	},
+	clean       : {
+        doc     : {
+            src : DOC_DST_PATH
+		},
+		mod     : {
+			src: [ MOD_DST_PATH + '/*.js', MOD_DST_PATH + '/*.map' ]
+		}
+	},
 	update_json : {
 		options : {
 			src    : 'package.json',
@@ -38,10 +80,23 @@ grunt.initConfig({
 	}
 });
 
+grunt.registerTask('compile',  function () {
+	var out = '';
+	grunt.file.read(MOD_SRC_PATH + '/var/index.js').split(/[\[\]]/)[1].replace(/[^-a-z0-9_,]+/ig, '').split(',').map(function (n) {
+		return MOD_SRC_PATH + '/var/' + n + '.js'; 
+	}).concat(grunt.file.read(MOD_SRC_PATH + '/index.js').match(/requirejs\(\[([^\]]+)\]/)[1].match(/\w+/g).map(function (n) {
+		return MOD_SRC_PATH + '/' + n + '.js'; 
+	})).forEach(function (n) {
+		out+= grunt.file.read(n).replace(/^[^;]+\{\'use strict\'\;/, '').replace(/return\s+\w+\s*;\s*\}\);\s*$/, '');
+	});
+	grunt.file.write(MOD_DST_FILE, out + 'return mod;');
+	grunt.log.ok('1 file created.');
+});
+
 require("load-grunt-tasks")(grunt);
 
-grunt.registerTask('distdoc', [  ]);
-grunt.registerTask('distmod', [ 'update_json' ]);
+grunt.registerTask('distdoc', [ 'clean:doc'/*, 'jsdoc'*/ ]);
+grunt.registerTask('distmod', [ 'clean:mod', 'compile', 'umd', 'uglify', 'update_json' ]);
 
 grunt.registerTask('default', [ 'distdoc', 'distmod'  ]);
 
