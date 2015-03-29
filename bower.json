@@ -1,0 +1,48 @@
+{
+	"version": "1.0.0",
+	"name": "sumi-regexp",
+	"main": "dist/sumi-regexp.js",
+	"homepage": "http://rainersu.github.io/regexp",
+	"description": "A wrapper for the JavaScript RegExp object to make regular expressions simple and smart.",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Rainer Su",
+			"email": "rainersu@foxmail.com",
+			"url": "http://cn.linkedin.com/in/rainersu",
+			"qq": "2627001536"
+		}
+	],
+	"ignore": [
+		"_",
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"/doc",
+		"/src",
+		"/doc.json",
+		"/Gruntfile.js",
+		"test",
+		"tests",
+		"logs",
+		"*.log"
+	],
+	"keywords": [
+		"regular",
+		"expression",
+		"regexp",
+		"regex",
+		"match",
+		"search",
+		"replace",
+		"extract",
+		"pattern",
+		"browser",
+		"library",
+		"javascript"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rainersu/regexp.git"
+	}
+}
