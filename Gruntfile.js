@@ -14,6 +14,11 @@ var pkg = grunt.file.readJSON("package.json"),
 
 grunt.initConfig({
 	pkg         : pkg,
+	bytesize    : {
+		mod     : {
+			src : [ MOD_DST_FILE, MOD_MIN_FILE ]
+		}
+	},
 	umd         : {
 		mod     : {
 			options : {
@@ -84,19 +89,18 @@ grunt.registerTask('compile',  function () {
 	var out = '';
 	grunt.file.read(MOD_SRC_PATH + '/var/index.js').split(/[\[\]]/)[1].replace(/[^-a-z0-9_,]+/ig, '').split(',').map(function (n) {
 		return MOD_SRC_PATH + '/var/' + n + '.js'; 
-	}).concat(grunt.file.read(MOD_SRC_PATH + '/index.js').match(/requirejs\(\[([^\]]+)\]/)[1].match(/\w+/g).map(function (n) {
-		return MOD_SRC_PATH + '/' + n + '.js'; 
-	})).forEach(function (n) {
+	}).forEach(function (n) {
 		out+= grunt.file.read(n).replace(/^[^;]+\{\'use strict\'\;/, '').replace(/return\s+\w+\s*;\s*\}\);\s*$/, '');
 	});
-	grunt.file.write(MOD_DST_FILE, out + 'return mod;');
+	out+= grunt.file.read(MOD_SRC_PATH + '/index.js').split(/\'use strict\'\;/)[1].replace(/\}\);\s*$/, '');
+	grunt.file.write(MOD_DST_FILE, out);
 	grunt.log.ok('1 file created.');
 });
 
 require("load-grunt-tasks")(grunt);
 
 grunt.registerTask('distdoc', [ 'clean:doc'/*, 'jsdoc'*/ ]);
-grunt.registerTask('distmod', [ 'clean:mod', 'compile', 'umd', 'uglify', 'update_json' ]);
+grunt.registerTask('distmod', [ 'clean:mod', 'compile', 'umd', 'uglify', 'update_json', 'bytesize' ]);
 
 grunt.registerTask('default', [ 'distdoc', 'distmod'  ]);
 

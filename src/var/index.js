@@ -3,8 +3,10 @@ define([
 	'./object',
 	'./hasOP',
 	'./toStr',
-	'./mod',
-	'./reg',
+	'./slice',
 	'./am',
-	'./cp'
+	'./cp',
+	'./noop',
+	'./expressions',
+	'./compile'
 ]);

@@ -19,21 +19,47 @@ A wrapper for the JavaScript RegExp object to make regular expressions simple an
     var object = Object;
     var hasOP = object.prototype.hasOwnProperty;
     var toStr = object.prototype.toString;
-    var mod = {};
-    var udf = "" + undefined, win = typeof window !== udf ? window : typeof global !== udf ? global : this;
-    function reg(m, n) {
-        if (win) {
-            win[n] = win[n] || m;
-        }
-        return mod[n] = m;
-    }
+    var slice = Array.prototype.slice;
     function am(v) {
         return toStr.call(v).split(/\W+/)[2].toLowerCase();
     }
     function cp(d, o) {
         for (var m in o) if (hasOP.call(o, m)) d[m] = o[m];
     }
-    function Pattern() {}
-    reg(Pattern, "Pattern");
-    return mod;
+    var noop = Function();
+    var expressions = {};
+    function compile(p, y, g) {
+        y = y | 0;
+        g = g ? "g" : "";
+        if (p.ignoreCase) g += "i";
+        p = p.source;
+        p = y > 1 ? "^(?:" + p + ")$" : y > 0 ? "(?:^|\\b)(?:" + p + ")(?:$|\\b)" : p;
+        y = "/" + p + "/" + g;
+        return expressions[y] || (expressions[y] = new RegExp(p, g));
+    }
+    function Pattern(p, k, f, b) {
+        if (!(this instanceof Pattern)) return new Pattern(p, k, f, b);
+        var r = am(p) === "regexp";
+        b = +b;
+        cp(this, {
+            ignoreCase: r && b !== b ? p.ignoreCase : !!b,
+            source: r ? p.source : p,
+            keys: am(k) === "string" ? k.split(/[\s,;|]+/) : k && slice.call(k),
+            parser: f || noop
+        });
+    }
+    cp(Pattern, {
+        reg: function(n, o) {
+            this[n] = new Match(i.pattern, i.keys, i.parser);
+        }
+    });
+    cp(Pattern.prototype, {
+        is: function(s) {
+            return compile(this, 2).test(s);
+        }
+    });
+    var undef = undefined + "";
+    var shell = typeof window !== undef ? window : typeof global !== undef ? global : this || 1;
+    shell.Pattern = shell.Pattern || Pattern;
+    return Pattern;
 });

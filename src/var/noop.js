@@ -1,6 +1,7 @@
-
 define(function () {'use strict';
 
-return function () {};
+var noop = Function();
+
+return noop;
 
 });
