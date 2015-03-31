@@ -7,6 +7,18 @@
 * @param {string|string[]} [keys] - 用于 {@link Pattern#parse|parse} 方法的键值数组。也可以是用英文逗号或分号或空格分隔的字符串形式。
 * @param {Pattern~parseCallback} [parser] - 用于 {@link Pattern#parse|parse} 方法的回调函数。
 * @param {boolean} [ignoreCase=false] - 正则表达式是否忽略字母大小写。参见  {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/ignoreCase|RegExp.prototype.ignoreCase} 。
+* @example
+* var cnID = new Pattern(
+*     '(\\d{2})(\\d{2})(\\d{2})(\\d{4})(\\d{2})(\\d{2})(\\d{2}(\\d{1}))([\\dX]{1})',
+*     'province,city,district,year,month,day,serial,sex,code',
+*     function (o) {
+*         return {
+*             sex: +o.sex % 2 ? 'male' : 'female',
+*             birthday: new Date(+o.year, +o.month - 1, +o.day).toLocaleDateString()
+*         }
+*     }
+* );
+* console.log(cnID.parse('44011119800315281X'));   // [ { sex: 'male', birthday: '1980-03-15' } ]
 */
 
 /**

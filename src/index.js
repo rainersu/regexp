@@ -87,14 +87,6 @@ replace      : function (s, f, b, g) {
 }
 });
 
-var pat = new Pattern('\\d+');
-pat.ignoreCase = true;
-console.log(pat.toJSON());
-console.log(JSON.stringify(pat));         // /\d+/i
-
-
-
-
 var undef = undefined + '';
 var shell = typeof window !== undef ? window : typeof global !== undef ? global : this || 1;
 shell.Pattern = shell.Pattern || Pattern;

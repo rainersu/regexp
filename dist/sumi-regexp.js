@@ -179,10 +179,6 @@ A wrapper for the JavaScript RegExp object to make regular expressions simple an
             return s.replace(compile(this, b === b ? b : 1, g || "g"), f);
         }
     });
-    var pat = new Pattern("\\d+");
-    pat.ignoreCase = true;
-    console.log(pat.toJSON());
-    console.log(JSON.stringify(pat));
     var undef = undefined + "";
     var shell = typeof window !== undef ? window : typeof global !== undef ? global : this || 1;
     shell.Pattern = shell.Pattern || Pattern;
