@@ -1,0 +1,9 @@
+define([
+	'./patterns/color',
+	'./patterns/url',
+	'./patterns/email',
+	'./patterns/time',
+	'./patterns/id-cn',
+	'./patterns/tel-cn',
+	'./patterns/mobile-cn'
+]);

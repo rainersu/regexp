@@ -7,6 +7,9 @@ define([
 	'./am',
 	'./cp',
 	'./noop',
+	'./Pattern',
+	'./patterns',
 	'./expressions',
-	'./compile'
+	'./compile',
+	'./reg'
 ]);

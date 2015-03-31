@@ -61,6 +61,35 @@ grunt.initConfig({
 			src: [ MOD_DST_PATH + '/*.js', MOD_DST_PATH + '/*.map' ]
 		}
 	},
+	jsdoc       : {
+		doc     : {
+			src     : [ DOC_SRC_PATH + '/**/*.js', 'README.md' ],
+			options : {
+				verbose     : true,
+				destination : DOC_DST_PATH,
+				template    : "node_modules/jaguarjs-jsdoc",
+				configure   : "doc.json"
+			}
+		}
+	},
+	connect     : {
+		doc     : {
+			options : {
+				verbose      : true,
+				hostname     : '*',
+				port         : 8001,
+				base         : DOC_DST_PATH,
+				keepalive    : true,
+				open         : true
+                /*,middleware   : function (connect, options) {
+                    return [
+						require('connect-livereload')(),
+						connect.static(path.resolve('' + options.base))
+                    ];
+                }*/
+			}
+		}
+	},
 	update_json : {
 		options : {
 			src    : 'package.json',
@@ -87,20 +116,33 @@ grunt.initConfig({
 
 grunt.registerTask('compile',  function () {
 	var out = '';
-	grunt.file.read(MOD_SRC_PATH + '/var/index.js').split(/[\[\]]/)[1].replace(/[^-a-z0-9_,]+/ig, '').split(',').map(function (n) {
-		return MOD_SRC_PATH + '/var/' + n + '.js'; 
-	}).forEach(function (n) {
-		out+= grunt.file.read(n).replace(/^[^;]+\{\'use strict\'\;/, '').replace(/return\s+\w+\s*;\s*\}\);\s*$/, '');
+	grunt.file.read(MOD_SRC_PATH + '/var/index.js').split(/[\[\]]/)[1].replace(/[^-a-z0-9_,]+/ig, '').split(',').forEach(function (n) {
+		out+= grunt.file.read(
+			MOD_SRC_PATH + '/var/' + n + '.js'
+		).replace(/^[^;]+\{\'use strict\'\;/, '').replace(/return\s+\w+\s*;\s*\}\);\s*$/, '');
+	});
+	grunt.file.read(MOD_SRC_PATH + '/patterns.js' ).split(/[\[\]]/)[1].replace(/[\.\'\"\s]+/ig,   '').split(',').forEach(function (n) {
+		out+= grunt.file.read(
+			MOD_SRC_PATH + n + '.js'
+		).replace(/^[^;]+\{\'use strict\'\;/, '').replace(/\s*\}\);\s*$/, '');
 	});
 	out+= grunt.file.read(MOD_SRC_PATH + '/index.js').split(/\'use strict\'\;/)[1].replace(/\}\);\s*$/, '');
 	grunt.file.write(MOD_DST_FILE, out);
 	grunt.log.ok('1 file created.');
 });
 
+grunt.registerTask('showtime', function () {
+	grunt.log.ok('demo for node.js(CommonJS)...');
+	require('./' + MOD_DST_PATH + '/demo/node/index.js');
+});
+
 require("load-grunt-tasks")(grunt);
 
-grunt.registerTask('distdoc', [ 'clean:doc'/*, 'jsdoc'*/ ]);
+grunt.registerTask('distdoc', [ 'clean:doc', 'jsdoc'  ]);
 grunt.registerTask('distmod', [ 'clean:mod', 'compile', 'umd', 'uglify', 'update_json', 'bytesize' ]);
+
+grunt.registerTask('help', [ 'distdoc', 'connect:doc' ]);
+grunt.registerTask('test', [ 'distmod', 'showtime'    ]);
 
 grunt.registerTask('default', [ 'distdoc', 'distmod'  ]);
 

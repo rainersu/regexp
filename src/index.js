@@ -5,37 +5,96 @@ requirejs.config({
 requirejs([
 	'./var/cp',
 	'./var/am',
-	'./var/noop',
-	'./var/slice',
+	'./var/hasOP',
+	'./var/object',
 	'./var/compile',
+	'./var/reg',
+	'./var/expressions',
+	'./var/patterns',
+	'./var/Pattern',
 	'./patterns'
 ],
 function(
 	cp,
 	am,
-	noop,
-	slice,
+	hasOP,
+	object,
 	compile,
-	patterns
+	reg,
+	expressions,
+	patterns,
+	Pattern,
+	plugins
 ) {'use strict';
 
-function Pattern (p, k, f, b) {
-	if (!(this instanceof Pattern)) return new Pattern(p, k, f, b);
-	var r = am(p) === 'regexp';
-	b = +b;
-	cp(this, {
-		ignoreCase : r && b !== b ? p.ignoreCase : !!b,
-		source     : r ? p.source : p,
-		keys       : am(k) === 'string' ? k.split(/[\s,;|]+/) : k && slice.call(k),
-		parser     : f || noop
-	});
+cp(Pattern, {
+patterns : patterns,
+reg      : reg,
+cache    : true,
+clear    : function () {
+	for(var n in expressions) if (hasOP.call(expressions, n)) delete expressions[n]; 
+}
+});
+
+function tj () {
+	return '' + compile(this);
 }
 
 cp(Pattern.prototype, {
-is : function (s) {
+toJSON       : tj,
+toString     : tj,
+toRegExp     : function (y, g) {
+	return compile(this, y, g);
+},
+is           : function (s) {
 	return compile(this, 2).test(s);
+},
+in           : function (s, b) {
+	return compile(this, b).test(s);
+},
+index        : function (s, b) {
+	return s.search(compile(this, b));
+},
+match        : function (s, b) {
+	b =+b;
+	return s.match(compile(this, b === b ? b : 1, 'g')) || [];
+},
+parse        : function (s, b) {
+	b =+b;
+	var r = [],
+		k = this.keys,
+		e = compile(this, b === b ? b : 1, 'g'),
+		l,
+		a,
+		o,
+		v,
+		j;
+	while ((a = e.exec(s)) !== null) {
+		o = object(a.shift());
+		for (l = k.length; l--;) {
+			j = k[l];
+			v = a[l];
+			if (o[j] === undefined && v !== undefined) o[j] = v;
+		}
+		v = this.parser(o);
+		r.push(v !== undefined ? v : o);
+	}
+	return r;
+},
+replace      : function (s, f, b, g) {
+	b =+b;
+	return s.replace(compile(this, b === b ? b : 1, g || 'g'), f);
 }
 });
+
+var rex = new Pattern('\\d+');
+
+console.log(rex.replace('{ top: 5; z-index: 3; }', '$&em'));           
+// { top: 5em; z-index: 3em; }
+
+console.log(rex.replace('{ top: 5; z-index: 3; }', function(i) { return i + 'em'; })); 
+// { top: 5em; z-index: 3em; }
+
 
 var undef = undefined + '';
 var shell = typeof window !== undef ? window : typeof global !== undef ? global : this || 1;
