@@ -48,7 +48,7 @@ A wrapper for the JavaScript RegExp object to make regular expressions simple an
     function compile(p, y, g) {
         y = y | 0;
         g = g ? "g" : "";
-        if (p.ignoreCase) g += "i";
+        if (p.ignoreCase && !/i/i.test(g)) g += "i";
         p = p.source;
         p = y > 1 ? "^(?:" + p + ")$" : y > 0 ? "(?:^|\\b)(?:" + p + ")(?:$|\\b)" : p;
         y = "/" + p + "/" + g;
@@ -179,11 +179,10 @@ A wrapper for the JavaScript RegExp object to make regular expressions simple an
             return s.replace(compile(this, b === b ? b : 1, g || "g"), f);
         }
     });
-    var rex = new Pattern("\\d+");
-    console.log(rex.replace("{ top: 5; z-index: 3; }", "$&em"));
-    console.log(rex.replace("{ top: 5; z-index: 3; }", function(i) {
-        return i + "em";
-    }));
+    var pat = new Pattern("\\d+");
+    pat.ignoreCase = true;
+    console.log(pat.toJSON());
+    console.log(JSON.stringify(pat));
     var undef = undefined + "";
     var shell = typeof window !== undef ? window : typeof global !== undef ? global : this || 1;
     shell.Pattern = shell.Pattern || Pattern;

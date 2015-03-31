@@ -87,13 +87,12 @@ replace      : function (s, f, b, g) {
 }
 });
 
-var rex = new Pattern('\\d+');
+var pat = new Pattern('\\d+');
+pat.ignoreCase = true;
+console.log(pat.toJSON());
+console.log(JSON.stringify(pat));         // /\d+/i
 
-console.log(rex.replace('{ top: 5; z-index: 3; }', '$&em'));           
-// { top: 5em; z-index: 3em; }
 
-console.log(rex.replace('{ top: 5; z-index: 3; }', function(i) { return i + 'em'; })); 
-// { top: 5em; z-index: 3em; }
 
 
 var undef = undefined + '';
