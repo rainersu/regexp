@@ -1,5 +1,93 @@
 # sumi-regexp
-A wrapper for the JavaScript RegExp object to make regular expressions simple and smart.
+A wrapper for the JavaScript RegExp object with a library of preset regular expressions to make it simple and smart.
+
+Target environments
+-------------------
+
+- IE 6+
+- Latest Stable: Firefox, Chrome, Safari, Opera
+- [Node.js](https://nodejs.org/) & other non-browser environments or browser extensions
+
+Quick start
+-----------
+
+Four quick start options are available:
+
+- [Download the latest release](https://github.com/rainersu/regexp/archive/v1.0.0.zip)
+- Clone the repo: `git clone https://github.com/rainersu/regexp.git`
+- Install with [Bower](http://bower.io): `bower install sumi-regexp`
+- Install with [npm](https://www.npmjs.com): `npm install sumi-regexp`
+
+Example use
+-----------
+
+Including in a browser:
+
+```html
+<script type='text/javascript' src='/path/to/sumi-regexp-1.0.0.min.js'></script>
+<script type='text/javascript'>
+var Pattern = sumiRegExp;
+var pat = new Pattern('color');
+console.log(pat.parse('background-color: hsla(240, 100%, 50%, 0.05); color: #F03;', false));
+</script>
+```
+
+As a module that works with AMD(e.g., [RequireJS](http://requirejs.org/)):
+
+```bash
+define(['/path/to/sumi-regexp'], function(Pattern) {
+	var pat = new Pattern('email');
+	console.log(pat.parse('admin@me.com'));
+});
+```
+
+Including in a CommonJS environment(e.g., [Node.js](https://nodejs.org/)):
+
+```bash
+var Pattern = require('/path/to/sumi-regexp');
+var cnID = new Pattern(
+    '(\\d{2})(\\d{2})(\\d{2})(\\d{4})(\\d{2})(\\d{2})(\\d{2}(\\d{1}))([\\dX]{1})',
+    'province,city,district,year,month,day,serial,sex,code',
+    function (o) {
+        return {
+            sex: +o.sex % 2 ? 'male' : 'female',
+            birthday: new Date(+o.year, +o.month - 1, +o.day).toLocaleDateString()
+        }
+    }
+);
+console.log(cnID.parse('44011119800315281X'));
+```
+
+Build from source
+-----------------
+
+First, you need to have [Node.js](https://nodejs.org/) and [Grunt](http://gruntjs.com/) installed.
+
+```bash
+$ git clone git@github.com:rainersu/regexp.git
+$ npm install -g grunt-cli
+$ cd regexp
+$ npm install
+$ grunt
+```
+
+It provides compiled JS (`sumi-regexp.*`), as well as compiled and minified JS (`sumi-regexp.min.*`). JS [source maps](https://developers.google.com/chrome-developer-tools/docs/css-preprocessors) (`sumi-regexp.*.map`) are available for use with certain browsers' developer tools.
+
+Running demos for testing
+-------------------------
+
+```bash
+$ grunt test
+```
+
+Build & running documentation locally
+-------------------------------------
+
+```bash
+$ grunt help
+```
+
+Sorry, the documentation is currently offered only in the Chinese language. Do you have time to help me with some Chinese - English translations?
 
 How to contact me
 -----------------

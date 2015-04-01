@@ -3,7 +3,7 @@
 	"name": "sumi-regexp",
 	"main": "dist/sumi-regexp.js",
 	"homepage": "http://rainersu.github.io/regexp",
-	"description": "A wrapper for the JavaScript RegExp object to make regular expressions simple and smart.",
+	"description": "A wrapper for the JavaScript RegExp object, with a library of preset regular expressions.",
 	"license": "MIT",
 	"authors": [
 		{
