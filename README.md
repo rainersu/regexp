@@ -1,4 +1,4 @@
-# sumi-regexp
+# [sumi-regexp](https://www.npmjs.com/package/sumi-regexp)
 A wrapper for the JavaScript RegExp object with a library of preset regular expressions to make it simple and smart.
 
 Target environments
