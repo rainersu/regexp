@@ -1,5 +1,5 @@
 # [sumi-regexp](https://www.npmjs.com/package/sumi-regexp)
-A wrapper for the JavaScript RegExp object with a library of preset regular expressions to make it simple and smart.
+A wrapper for the JavaScript RegExp object with a library of preset regular expressions to make it simple and smart. Stand alone mod, no dependencies.
 
 Target environments
 -------------------

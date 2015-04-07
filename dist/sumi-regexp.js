@@ -109,6 +109,14 @@ A wrapper for the JavaScript RegExp object, with a library of preset regular exp
         }
     });
     reg({
+        name: "number",
+        source: "(?:\\-|\\+)?[0-9]+(?:\\.[0-9]+)?(?:e(?:\\-|\\+)?[0-9]+(?:\\.[0-9]+)?|(\\%))?|(?:\\-|\\+)?Infinity",
+        keys: "percent",
+        parser: function(o) {
+            return parseFloat(o + "") / (o.percent ? 100 : 1);
+        }
+    });
+    reg({
         name: "id-cn",
         source: "(\\d{2})(\\d{2})(\\d{2})(\\d{4})(\\d{2})(\\d{2})(\\d{2}(\\d{1}))([\\dX]{1})",
         keys: "province,city,district,year,month,day,serial,sex,code"
@@ -179,6 +187,13 @@ A wrapper for the JavaScript RegExp object, with a library of preset regular exp
             return s.replace(compile(this, b === b ? b : 1, g || "g"), f);
         }
     });
+    var pat = new Pattern("number");
+    console.log([ "Infinity", "-1.233.3", "-123.3e-2", "a-123.3e-2b", "a-123.3%b" ].map(function(str) {
+        return pat.match(str)[0];
+    }));
+    console.log([ "Infinity", "-1.233.3", "-123.3e-2", "a-123.3e-2b", "a-123.3%b" ].map(function(str) {
+        return pat.parse(str, false)[0];
+    }));
     var undef = undefined + "";
     var shell = typeof window !== undef ? window : typeof global !== undef ? global : this || 1;
     shell.Pattern = shell.Pattern || Pattern;

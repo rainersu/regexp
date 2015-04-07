@@ -3,6 +3,7 @@ define([
 	'./patterns/url',
 	'./patterns/email',
 	'./patterns/time',
+	'./patterns/number',
 	'./patterns/id-cn',
 	'./patterns/tel-cn',
 	'./patterns/mobile-cn'

@@ -21,6 +21,20 @@ console.log(pat.parse('background-color: hsla(240, 100%, 50%, 0.05); color: #F03
 // { [String: '#F03'] r: 255, g: 0, b: 51, a: 1 } 
 // ]
 
+var pat = new Pattern('number');
+
+console.log([ 'Infinity', '-1.233.3', '-123.3e-2', 'a-123.3e-2b', 'a-123.3%b' ].map(function (str) {
+    return pat.match(str)[0];
+}));
+
+// [ 'Infinity', '-1.233', '-123.3e-2', '-123', '-123.3%' ]
+
+console.log([ 'Infinity', '-1.233.3', '-123.3e-2', 'a-123.3e-2b', 'a-123.3%b' ].map(function (str) {
+    return pat.parse(str, false)[0];
+}));
+
+// [ Infinity, -1.233, -1.233, -1.233, -1.233 ]
+
 var pat = Pattern('email');
 console.log(pat.parse('admin@me.com'));
 // [ { [String: 'admin@me.com'] domain: 'me.com', user: 'admin' } ]
