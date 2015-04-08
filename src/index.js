@@ -89,20 +89,6 @@ replace      : function (s, f, b, g) {
 }
 });
 
-var pat = new Pattern('number');
-
-console.log([ 'Infinity', '-1.233.3', '-123.3e-2', 'a-123.3e-2b', 'a-123.3%b' ].map(function (str) {
-    return pat.match(str)[0];
-}));
-
-// [ 'Infinity', '-1.233', '-123.3e-2', '-123', '-123.3%' ]
-
-console.log([ 'Infinity', '-1.233.3', '-123.3e-2', 'a-123.3e-2b', 'a-123.3%b' ].map(function (str) {
-    return pat.parse(str, false)[0];
-}));
-
-// [ Infinity, -1.233, -1.233, -1.233, -1.233 ]
-
 
 var undef = undefined + '';
 var shell = typeof window !== undef ? window : typeof global !== undef ? global : this || 1;

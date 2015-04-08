@@ -29,6 +29,12 @@ Including in a browser:
 var Pattern = sumiRegExp;
 var pat = new Pattern('color');
 console.log(pat.parse('background-color: hsla(240, 100%, 50%, 0.05); color: #F03;', false));
+
+/* [ 
+{ [String: 'hsla(240, 100%, 50%, 0.05)'] h: 240, s: 100, l: 50, a: 0.05 },
+{ [String: '#F03'] r: 255, g: 0, b: 51, a: 1 }
+] */
+
 </script>
 ```
 
@@ -38,6 +44,9 @@ As a module that works with AMD(e.g., [RequireJS](http://requirejs.org/)):
 define(['/path/to/sumi-regexp'], function(Pattern) {
 	var pat = new Pattern('email');
 	console.log(pat.parse('admin@me.com'));
+	
+	// [ { [String: 'admin@me.com'] domain: 'me.com', user: 'admin' } ]
+	
 });
 ```
 
@@ -55,7 +64,7 @@ var cnID = new Pattern(
         }
     }
 );
-console.log(cnID.parse('44011119800315281X'));
+console.log(cnID.parse('44011119800315281X'));  // [ { sex: 'male', birthday: '1980-03-15' } ]
 ```
 
 Build from source
