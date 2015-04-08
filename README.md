@@ -34,7 +34,7 @@ console.log(pat.parse('background-color: hsla(240, 100%, 50%, 0.05); color: #F03
 
 As a module that works with AMD(e.g., [RequireJS](http://requirejs.org/)):
 
-```bash
+```JavaScript
 define(['/path/to/sumi-regexp'], function(Pattern) {
 	var pat = new Pattern('email');
 	console.log(pat.parse('admin@me.com'));
@@ -43,7 +43,7 @@ define(['/path/to/sumi-regexp'], function(Pattern) {
 
 Including in a CommonJS environment(e.g., [Node.js](https://nodejs.org/)):
 
-```bash
+```JavaScript
 var Pattern = require('/path/to/sumi-regexp');
 var cnID = new Pattern(
     '(\\d{2})(\\d{2})(\\d{2})(\\d{4})(\\d{2})(\\d{2})(\\d{2}(\\d{1}))([\\dX]{1})',
@@ -63,7 +63,7 @@ Build from source
 
 First, you need to have [Node.js](https://nodejs.org/) and [Grunt](http://gruntjs.com/) installed.
 
-```bash
+```Shell
 $ git clone git@github.com:rainersu/regexp.git
 $ npm install -g grunt-cli
 $ cd regexp
@@ -76,14 +76,14 @@ It provides compiled JS (`sumi-regexp.*`), as well as compiled and minified JS (
 Running demos for testing
 -------------------------
 
-```bash
+```Shell
 $ grunt test
 ```
 
 Build & running documentation locally
 -------------------------------------
 
-```bash
+```Shell
 $ grunt help
 ```
 
