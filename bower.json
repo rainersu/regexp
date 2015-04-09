@@ -1,5 +1,5 @@
 {
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"name": "sumi-regexp",
 	"main": "dist/sumi-regexp.js",
 	"homepage": "http://rainersu.github.io/regexp",

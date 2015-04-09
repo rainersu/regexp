@@ -1,7 +1,7 @@
 {
   "name": "sumi-regexp",
   "title": "sumi-regexp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A wrapper for the JavaScript RegExp object, with a library of preset regular expressions.",
   "main": "dist/sumi-regexp.js",
   "homepage": "http://rainersu.github.io/regexp",
