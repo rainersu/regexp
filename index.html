@@ -20,9 +20,10 @@
 
     <section class="main-content">
       <h1>
-<a id="sumi-regexp" class="anchor" href="#sumi-regexp" aria-hidden="true"><span class="octicon octicon-link"></span></a>sumi-regexp</h1>
+<a id="sumi-regexp" class="anchor" href="#sumi-regexp" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://www.npmjs.com/package/sumi-regexp">sumi-regexp</a>
+</h1>
 
-<p>A wrapper for the JavaScript RegExp object with a library of preset regular expressions to make it simple and smart.</p>
+<p>A wrapper for the JavaScript RegExp object with a library of preset regular expressions to make it simple and smart. Stand alone mod, no dependencies.</p>
 
 <h2>
 <a id="target-environments" class="anchor" href="#target-environments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Target environments</h2>
@@ -40,7 +41,7 @@
 <p>Four quick start options are available:</p>
 
 <ul>
-<li><a href="https://github.com/rainersu/regexp/archive/v1.0.0.zip">Download the latest release</a></li>
+<li><a href="https://github.com/rainersu/regexp/archive/v1.0.2.zip">Download the latest release</a></li>
 <li>Clone the repo: <code>git clone https://github.com/rainersu/regexp.git</code>
 </li>
 <li>Install with <a href="http://bower.io">Bower</a>: <code>bower install sumi-regexp</code>
@@ -54,41 +55,50 @@
 
 <p>Including in a browser:</p>
 
-<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">'</span>text/javascript<span class="pl-pds">'</span></span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">'</span>/path/to/sumi-regexp-1.0.0.min.js<span class="pl-pds">'</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">'</span>text/javascript<span class="pl-pds">'</span></span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">'</span>/path/to/sumi-regexp-1.0.2.min.js<span class="pl-pds">'</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
 <span class="pl-s1">&lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">'</span>text/javascript<span class="pl-pds">'</span></span>&gt;</span>
 <span class="pl-s1"><span class="pl-k">var</span> Pattern <span class="pl-k">=</span> sumiRegExp;</span>
 <span class="pl-s1"><span class="pl-k">var</span> pat <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Pattern</span>(<span class="pl-s"><span class="pl-pds">'</span>color<span class="pl-pds">'</span></span>);</span>
 <span class="pl-s1"><span class="pl-en">console</span><span class="pl-c1">.log</span>(pat.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>background-color: hsla(240, 100%, 50%, 0.05); color: #F03;<span class="pl-pds">'</span></span>, <span class="pl-c1">false</span>));</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/* [ </span></span>
+<span class="pl-s1"><span class="pl-c">{ [String: 'hsla(240, 100%, 50%, 0.05)'] h: 240, s: 100, l: 50, a: 0.05 },</span></span>
+<span class="pl-s1"><span class="pl-c">{ [String: '#F03'] r: 255, g: 0, b: 51, a: 1 }</span></span>
+<span class="pl-s1"><span class="pl-c">] */</span></span>
+<span class="pl-s1"></span>
 <span class="pl-s1">&lt;/<span class="pl-ent">script</span>&gt;</span></pre></div>
 
 <p>As a module that works with AMD(e.g., <a href="http://requirejs.org/">RequireJS</a>):</p>
 
-<div class="highlight highlight-bash"><pre>define([<span class="pl-s"><span class="pl-pds">'</span>/path/to/sumi-regexp<span class="pl-pds">'</span></span>], function(Pattern) {
-    var pat = new Pattern(<span class="pl-s"><span class="pl-pds">'</span>email<span class="pl-pds">'</span></span>)<span class="pl-k">;</span>
-    console.log(pat.parse(<span class="pl-s"><span class="pl-pds">'</span>admin@me.com<span class="pl-pds">'</span></span>))<span class="pl-k">;</span>
-})<span class="pl-k">;</span></pre></div>
+<div class="highlight highlight-JavaScript"><pre>define([<span class="pl-s"><span class="pl-pds">'</span>/path/to/sumi-regexp<span class="pl-pds">'</span></span>], <span class="pl-k">function</span>(<span class="pl-smi">Pattern</span>) {
+    <span class="pl-k">var</span> pat <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Pattern</span>(<span class="pl-s"><span class="pl-pds">'</span>email<span class="pl-pds">'</span></span>);
+    <span class="pl-en">console</span><span class="pl-c1">.log</span>(pat.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>admin@me.com<span class="pl-pds">'</span></span>));
+
+    <span class="pl-c">// [ { [String: 'admin@me.com'] domain: 'me.com', user: 'admin' } ]</span>
+
+});</pre></div>
 
 <p>Including in a CommonJS environment(e.g., <a href="https://nodejs.org/">Node.js</a>):</p>
 
-<div class="highlight highlight-bash"><pre>var Pattern = require(<span class="pl-s"><span class="pl-pds">'</span>/path/to/sumi-regexp<span class="pl-pds">'</span></span>)<span class="pl-k">;</span>
-var cnID = new Pattern(
-    <span class="pl-s"><span class="pl-pds">'</span>(\\d{2})(\\d{2})(\\d{2})(\\d{4})(\\d{2})(\\d{2})(\\d{2}(\\d{1}))([\\dX]{1})<span class="pl-pds">'</span></span>,
+<div class="highlight highlight-JavaScript"><pre><span class="pl-k">var</span> Pattern <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>/path/to/sumi-regexp<span class="pl-pds">'</span></span>);
+<span class="pl-k">var</span> cnID <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Pattern</span>(
+    <span class="pl-s"><span class="pl-pds">'</span>(<span class="pl-cce">\\</span>d{2})(<span class="pl-cce">\\</span>d{2})(<span class="pl-cce">\\</span>d{2})(<span class="pl-cce">\\</span>d{4})(<span class="pl-cce">\\</span>d{2})(<span class="pl-cce">\\</span>d{2})(<span class="pl-cce">\\</span>d{2}(<span class="pl-cce">\\</span>d{1}))([<span class="pl-cce">\\</span>dX]{1})<span class="pl-pds">'</span></span>,
     <span class="pl-s"><span class="pl-pds">'</span>province,city,district,year,month,day,serial,sex,code<span class="pl-pds">'</span></span>,
-    <span class="pl-k">function</span> <span class="pl-en">(o)</span> {
+    <span class="pl-k">function</span> (<span class="pl-smi">o</span>) {
         <span class="pl-k">return</span> {
-            sex: +o.sex % 2 <span class="pl-k">?</span> <span class="pl-s"><span class="pl-pds">'</span>male<span class="pl-pds">'</span></span> <span class="pl-c1">:</span> <span class="pl-s"><span class="pl-pds">'</span>female<span class="pl-pds">'</span></span>,
-            birthday: new Date(+o.year, +o.month - 1, +<span class="pl-en">o.day).toLocaleDateString</span>()
+            sex<span class="pl-k">:</span> <span class="pl-k">+</span>o.sex <span class="pl-k">%</span> <span class="pl-c1">2</span> <span class="pl-k">?</span> <span class="pl-s"><span class="pl-pds">'</span>male<span class="pl-pds">'</span></span> <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>female<span class="pl-pds">'</span></span>,
+            birthday<span class="pl-k">:</span> <span class="pl-k">new</span> <span class="pl-en">Date</span>(<span class="pl-k">+</span>o.year, <span class="pl-k">+</span>o.month <span class="pl-k">-</span> <span class="pl-c1">1</span>, <span class="pl-k">+</span>o.day).toLocaleDateString()
         }
     }
-)<span class="pl-k">;</span>
-console.log(cnID.parse(<span class="pl-s"><span class="pl-pds">'</span>44011119800315281X<span class="pl-pds">'</span></span>))<span class="pl-k">;</span></pre></div>
+);
+<span class="pl-en">console</span><span class="pl-c1">.log</span>(cnID.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>44011119800315281X<span class="pl-pds">'</span></span>));  <span class="pl-c">// [ { sex: 'male', birthday: '1980-03-15' } ]</span></pre></div>
 
 <h2>
 <a id="build-from-source" class="anchor" href="#build-from-source" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build from source</h2>
 
 <p>First, you need to have <a href="https://nodejs.org/">Node.js</a> and <a href="http://gruntjs.com/">Grunt</a> installed.</p>
 
-<div class="highlight highlight-bash"><pre>$ git clone git@github.com:rainersu/regexp.git
+<div class="highlight highlight-Shell"><pre>$ git clone git@github.com:rainersu/regexp.git
 $ npm install -g grunt-cli
 $ <span class="pl-c1">cd</span> regexp
 $ npm install
@@ -99,12 +109,12 @@ $ grunt</pre></div>
 <h2>
 <a id="running-demos-for-testing" class="anchor" href="#running-demos-for-testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running demos for testing</h2>
 
-<div class="highlight highlight-bash"><pre>$ grunt <span class="pl-c1">test</span></pre></div>
+<div class="highlight highlight-Shell"><pre>$ grunt <span class="pl-c1">test</span></pre></div>
 
 <h2>
 <a id="build--running-documentation-locally" class="anchor" href="#build--running-documentation-locally" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build &amp; running documentation locally</h2>
 
-<div class="highlight highlight-bash"><pre>$ grunt <span class="pl-c1">help</span></pre></div>
+<div class="highlight highlight-Shell"><pre>$ grunt <span class="pl-c1">help</span></pre></div>
 
 <p>Sorry, the documentation is currently offered only in the Chinese language. Do you have time to help me with some Chinese - English translations?</p>
 
@@ -114,9 +124,8 @@ $ grunt</pre></div>
 <ul>
 <li><a href="mailto:rainersu@foxmail.com">rainersu@foxmail.com</a></li>
 <li><a href="http://cn.linkedin.com/in/rainersu">http://cn.linkedin.com/in/rainersu</a></li>
-<li><a href="https://www.npmjs.com/%7Erainersu">https://www.npmjs.com/~rainersu</a></li>
+<li><a href="http://site.douban.com/185696/">http://site.douban.com/185696/</a></li>
 <li><a href="http://rainersu.github.io">http://rainersu.github.io</a></li>
-<li><a href="http://weibo.com/rainersu">http://weibo.com/rainersu</a></li>
 <li><code>QQ: 2627001536</code></li>
 </ul>
 
