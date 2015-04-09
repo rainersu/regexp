@@ -13,7 +13,7 @@ Quick start
 
 Four quick start options are available:
 
-- [Download the latest release](https://github.com/rainersu/regexp/archive/v1.0.1.zip)
+- [Download the latest release](https://github.com/rainersu/regexp/archive/v1.0.2.zip)
 - Clone the repo: `git clone https://github.com/rainersu/regexp.git`
 - Install with [Bower](http://bower.io): `bower install sumi-regexp`
 - Install with [npm](https://www.npmjs.com): `npm install sumi-regexp`
@@ -24,7 +24,7 @@ Example use
 Including in a browser:
 
 ```html
-<script type='text/javascript' src='/path/to/sumi-regexp-1.0.1.min.js'></script>
+<script type='text/javascript' src='/path/to/sumi-regexp-1.0.2.min.js'></script>
 <script type='text/javascript'>
 var Pattern = sumiRegExp;
 var pat = new Pattern('color');

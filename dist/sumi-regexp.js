@@ -1,5 +1,5 @@
 /*!
-sumi-regexp v1.0.1
+sumi-regexp v1.0.2
 http://rainersu.github.io/regexp
 A wrapper for the JavaScript RegExp object, with a library of preset regular expressions.
 (c) 2015 Rainer Su( rainersu@foxmail.com | http://cn.linkedin.com/in/rainersu | QQ: 2627001536 )
